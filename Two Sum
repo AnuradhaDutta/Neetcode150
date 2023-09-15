@@ -1,0 +1,44 @@
+import java.util.Arrays;
+
+class Solution {
+    public static int[] twoSum(int[] nums, int target) {
+        // Create an array of Integer objects to hold the indices
+        Integer[] originalIndices = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            originalIndices[i] = i;
+        }
+
+        // Sort the originalIndices array based on the values in nums
+        Arrays.sort(originalIndices, (a, b) -> Integer.compare(nums[a], nums[b]));
+
+        int left = 0;
+        int right = nums.length - 1;
+
+        while (left < right) {
+            int currentSum = nums[originalIndices[left]] + nums[originalIndices[right]];
+            if (currentSum == target) {
+                int[] result = {originalIndices[left], originalIndices[right]};
+                return result;
+            } else if (currentSum < target) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        // If no solution is found, return an empty array
+        return new int[0];
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {2, 7, 11, 15};
+        int target = 9;
+        int[] result = twoSum(nums, target);
+
+        if (result.length == 2) {
+            System.out.println("Indices of two numbers that add up to the target: " + result[0] + " and " + result[1]);
+        } else {
+            System.out.println("No such indices found.");
+        }
+    }
+}
